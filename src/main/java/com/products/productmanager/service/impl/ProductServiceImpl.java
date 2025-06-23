@@ -25,7 +25,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductById(Integer id) {
-        return null;
+        Product product = productRepository.findById(id).orElseThrow();
+        return modelMapper.map(product, ProductDTO.class);
     }
 
     @Override
