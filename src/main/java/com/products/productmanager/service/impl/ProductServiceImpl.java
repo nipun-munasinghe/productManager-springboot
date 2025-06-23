@@ -1,8 +1,11 @@
 package com.products.productmanager.service.impl;
 
 import com.products.productmanager.dto.ProductDTO;
+import com.products.productmanager.model.Product;
+import com.products.productmanager.repository.ProductRepository;
 import com.products.productmanager.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,9 +13,14 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
+    private final ProductRepository productRepository;
+    private final ModelMapper modelMapper;
+
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
-        return null;
+        Product product = modelMapper.map(productDTO, Product.class);
+        Product savedProduct = productRepository.save(product);
+        return modelMapper.map(savedProduct, ProductDTO.class);
     }
 
     @Override
