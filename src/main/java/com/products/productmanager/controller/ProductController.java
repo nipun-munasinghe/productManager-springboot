@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
@@ -21,5 +23,10 @@ public class ProductController {
     @GetMapping("/{id}")
     public ProductDTO getProductById(@PathVariable Integer id) {
         return productService.getProductById(id);
+    }
+
+    @GetMapping
+    public List<ProductDTO> getProducts() {
+        return productService.getAllProducts();
     }
 }
