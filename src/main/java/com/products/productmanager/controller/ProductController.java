@@ -17,4 +17,9 @@ public class ProductController {
     public ProductDTO createProduct(@RequestBody ProductDTO productDTO) {
         return productService.createProduct(productDTO);
     }
+
+    @GetMapping("/{id}")
+    public ProductDTO getProductById(@PathVariable Integer id) {
+        return productService.getProductById(id);
+    }
 }
