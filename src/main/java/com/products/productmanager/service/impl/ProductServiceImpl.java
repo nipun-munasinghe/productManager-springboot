@@ -26,7 +26,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO getProductById(Integer id) {
-        Product product = productRepository.findById(id).orElseThrow();
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Product not found!")
+        );
         return modelMapper.map(product, ProductDTO.class);
     }
 
@@ -42,7 +44,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO updateProduct(Integer id, ProductDTO productDTO) {
-        return null;
+        Product existingProduct = productRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Product not found!")
+        );
+        //Copy new values from productDTO to that product
+        modelMapper.map(productDTO, existingProduct);
+        //Save updated product to the database
+        Product updatedProduct = productRepository.save(existingProduct);
+        //Return the updated version as a DTO
+        return modelMapper.map(updatedProduct, ProductDTO.class);
     }
 
     @Override
